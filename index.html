@@ -1,314 +1,646 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Safa Orhan — Engineering Manager, maker, and community builder based in Konya, Turkey." />
-  <title>Safa Orhan</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=3" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Safa Orhan — SDK Engineer at Supabase, based in Konya. Software, electronics and a cherry tree that keeps the seasons.">
+<title>Safa Orhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #121014; }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .mono { font: 11px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace; color: #efe6dc; letter-spacing: .02em; }
+  .ui { position: fixed; right: 24px; top: 1.6rem; display: flex; gap: 16px; align-items: center; user-select: none; }
+  .ui button { all: unset; cursor: pointer; opacity: .32; text-decoration: underline; text-decoration-color: transparent;
+               text-underline-offset: 5px; transition: opacity .2s, text-decoration-color .2s; }
+  .ui button:hover, .ui button:focus-visible { opacity: .8; }
+  .ui button.on { opacity: .9; text-decoration-color: currentColor; }
+  .bar { width: 64px; height: 1px; background: rgba(239,230,220,.15); position: relative; }
+  .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(239,230,220,.6); }
+  :root { --fg: #ece4da; --season: #e8a0bc; }
+  /* text block mirrors daoho.dev: bottom-aligned, mono 15px */
+  .intro { position: fixed; left: 48vw; right: 6vw; bottom: 0; padding-bottom: 8rem; display: flex; flex-direction: column;
+           gap: 2.5rem; color: var(--fg); font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+           pointer-events: none; }
+  .intro a, .intro .links { pointer-events: auto; }
+  .prose { max-width: 54rem; font-size: 15px; line-height: max(22px, 3vh); animation: in .3s .2s ease-out both; }
+  .prose h1, .prose p { font: inherit; margin: 0; }
+  .prose a, .links a { color: inherit; text-decoration: underline; text-underline-offset: 5px;
+                       text-decoration-color: color-mix(in srgb, var(--fg) 35%, transparent);
+                       transition: text-decoration-color .15s, color .15s; }
+  .prose a:hover, .prose a:focus-visible { text-decoration-color: var(--season); color: var(--season); outline: none; }
+  .links { margin-top: 1.5vh; }
+  .links a { opacity: .6; text-decoration: none; } .links a:hover, .links a:focus-visible { opacity: 1; outline: none; }
+  .links .slash { opacity: .4; }
+  @keyframes in { from { opacity: 0; } }
+  @media (max-width: 760px) {
+    .intro { left: 20px; right: 20px; padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px)); gap: 1.5rem; }
+    .prose { font-size: 14px; line-height: 1.6; }
+    .prose p + p { margin-top: .4rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .prose { animation: none; } }
+</style>
 </head>
 <body>
-
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <a href="#" class="nav-logo" aria-label="Safa Orhan — Home">SO</a>
-    <ul class="nav-links" role="list">
-      <li><a href="#about">About</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#blog">Blog</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero" id="home" aria-label="Introduction">
-    <canvas id="gol-canvas" aria-hidden="true"></canvas>
-    <div class="container hero-container">
-
-      <!-- Left: Identity -->
-      <div class="hero-left">
-        <div class="hero-meta">
-          <span class="hero-status">
-            <span class="status-dot status-dot--open" aria-hidden="true"></span>
-            Open to Work · Engineering Manager
-          </span>
-          <span class="hero-meta-sep" aria-hidden="true">·</span>
-          <span class="hero-location">Konya, Turkey</span>
-        </div>
-
-        <h1 class="hero-name">Safa<br>Orhan</h1>
-
-        <p class="hero-role">
-          <span id="role-text">Engineering Manager</span>
-        </p>
-
-        <p class="hero-bio">
-          Makes software for a living, hacks electronics for fun,
-          and gets way too excited for clever things.
-        </p>
-
-        <div class="hero-links">
-          <a href="https://www.youtube.com/c/SafaOrhanTR" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-              <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
-            </svg>
-            YouTube
-          </a>
-          <a href="https://x.com/safaorhantr" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-            Twitter
-          </a>
-          <a href="https://safaorhan.medium.com" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="Medium">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
-            </svg>
-            Medium
-          </a>
-          <a href="https://www.linkedin.com/in/safaorhan/" class="hero-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-            </svg>
-            LinkedIn
-          </a>
-        </div>
-      </div>
-
-      <!-- Right: Facts panel -->
-      <aside class="hero-right" aria-label="Quick facts">
-        <div class="fact">
-          <span class="fact-label">Building</span>
-          <span class="fact-value">
-            <a href="https://konyahackerspace.org" class="fact-link" target="_blank" rel="noopener noreferrer">Konya Hackerspace</a>
-            — since 2025
-          </span>
-        </div>
-        <div class="fact">
-          <span class="fact-label">Currently</span>
-          <span class="fact-value">Looking for work as an engineering manager, technical lead or technical product manager.</span>
-          <div style="margin-top: 0.75rem;">
-            <a href="/cv/" class="tag tag--accent">View CV</a>
-          </div>
-        </div>
-        <div class="fact">
-          <span class="fact-label">Experience</span>
-          <div class="fact-tags">
-            <span class="fact-tag">Warehouse Management Systems</span>
-            <span class="fact-tag">Mobile Device Management</span>
-            <span class="fact-tag">Technical PM</span>
-          </div>
-        </div>
-      </aside>
-
+<canvas id="c"></canvas>
+<header class="intro">
+  <div class="prose" data-dim>
+    <h1>Hey, this is Safa.</h1>
+    <p>SDK Engineer @ <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a>, based in Konya.</p>
+    <p>Before that, <a href="https://www.rticoutdoors.com" target="_blank" rel="noopener noreferrer">RTIC Outdoors</a>, <a href="https://www.wayfair.com" target="_blank" rel="noopener noreferrer">Wayfair</a>, and a decade of software engineering.</p>
+    <p>Also building <a href="https://konyahackerspace.org" target="_blank" rel="noopener noreferrer">Konya Hackerspace</a> and hacking electronics for fun.</p>
+    <div class="links">
+      <a href="https://www.youtube.com/c/SafaOrhanTR" target="_blank" rel="noopener noreferrer">youtube</a><span class="slash"> / </span><a href="https://x.com/safaorhantr" target="_blank" rel="noopener noreferrer">x</a><span class="slash"> / </span><a href="https://safaorhan.medium.com" target="_blank" rel="noopener noreferrer">medium</a><span class="slash"> / </span><a href="https://www.linkedin.com/in/safaorhan/" target="_blank" rel="noopener noreferrer">linkedin</a>
     </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="section" id="about" aria-label="About me">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-num">01</span>
-        <h2>About</h2>
-      </div>
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <p>
-            Hey, this is Safa -- a software engineer based in Konya, Türkiye. I studied computer engineering at Boğaziçi University and have been making a living creating software for more than a decade.
-          </p>
-          <p>
-            Being always interested in all sorts of technology, I am an aspiring <a href="https://en.wikipedia.org/wiki/Hacker" class="inline-link" target="_blank" rel="noopener noreferrer">hacker</a> inside.
-          </p>
-          <p>
-            I'm currently looking for my next Engineering Manager role. Most recently, I led engineering at <a href="https://rticoutdoors.com" class="inline-link" target="_blank" rel="noopener noreferrer">RTIC Outdoors</a>, building products around warehouse management, mobile device management, and retail — while also building a community of local hackers and a highly functional community space for <a href="https://konyahackerspace.org" class="inline-link" target="_blank" rel="noopener noreferrer">Konya Hackerspace</a>.
-          </p>
-          <p>
-            When I have some free time, I like to read non-fiction books, do hobby electronics or make fun videos for <a href="https://www.youtube.com/c/SafaOrhanTR" class="inline-link" target="_blank" rel="noopener noreferrer">YouTube</a>.
-          </p>
-        </div>
-        <div class="about-aside reveal">
-          <div class="tag-group">
-            <span class="tag-label">Education</span>
-            <div class="tags">
-              <span class="tag">Boğaziçi University</span>
-              <span class="tag">Computer Engineering</span>
-            </div>
-          </div>
-          <div class="tag-group">
-            <span class="tag-label">Hobbies</span>
-            <div class="tags">
-              <span class="tag">Hobby Electronics</span>
-              <span class="tag">3D Printing</span>
-              <span class="tag">Vlogging</span>
-              <span class="tag">Running</span>
-              <span class="tag">FPV Drones</span>
-              <span class="tag">Amateur Radio</span>
-              <span class="tag">Non-fiction</span>
-              <span class="tag">Skateboarding</span>
-            </div>
-          </div>
-          <div class="tag-group">
-            <span class="tag-label">Rabbit Holes</span>
-            <div class="tags">
-              <span class="tag">Adam Savage</span>
-              <span class="tag">Garmin</span>
-              <span class="tag">Bambu Lab</span>
-              <span class="tag">Neistat Brothers</span>
-              <span class="tag">Behavioral Psychology</span>
-              <span class="tag">Hackerspaces</span>
-              <span class="tag">Drone Warfare</span>
-            </div>
-          </div>
-          <div class="tag-group">
-            <span class="tag-label">Languages</span>
-            <div class="tags">
-              <span class="tag">Turkish</span>
-              <span class="tag">English</span>
-              <span class="tag">Arabic</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="section section--alt" id="work" aria-label="Work">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-num">02</span>
-        <h2>Work</h2>
-      </div>
-
-      <!-- Career path -->
-      <h3 class="subsection-title reveal">Career</h3>
-      <div class="career-list">
-
-        <div class="career-row reveal">
-          <div class="career-left">
-            <span class="career-company"><a href="https://www.rticoutdoors.com" class="career-link" target="_blank" rel="noopener noreferrer">RTIC Outdoors</a></span>
-            <span class="career-role">Manager, Engineering</span>
-          </div>
-          <p class="career-desc">
-            Leading engineering at a fast-growing outdoor gear company. Building products
-            around warehouse management, mobile device management, and retail.
-          </p>
-          <span class="career-period">2021 – 2026</span>
-        </div>
-
-        <div class="career-row reveal">
-          <div class="career-left">
-            <span class="career-company"><a href="https://www.youtube.com/watch?v=APkb4AILvNU" class="career-link" target="_blank" rel="noopener noreferrer">Cactus.School</a></span>
-            <span class="career-role">Trainer &amp; Mentor</span>
-          </div>
-          <p class="career-desc">
-            Built online Android courses for different skill levels. Also trained bootcamps for Trendyol and UpSchool.
-          </p>
-          <span class="career-period">2020 – 2021</span>
-        </div>
-
-        <div class="career-row reveal">
-          <div class="career-left">
-            <span class="career-company"><a href="https://www.wayfair.com" class="career-link" target="_blank" rel="noopener noreferrer">Wayfair</a></span>
-            <span class="career-role">Android Engineer</span>
-          </div>
-          <p class="career-desc">
-            Part of a 40+ person Android team in Berlin. Worked on an app with over
-            10 million downloads.
-          </p>
-          <span class="career-period">2018 – 2020</span>
-        </div>
-
-        <div class="career-row reveal">
-          <div class="career-left">
-            <span class="career-company"><a href="https://www.linkedin.com/in/safaorhan/" class="career-link" target="_blank" rel="noopener noreferrer">Various Work</a></span>
-            <span class="career-role">Software Engineer</span>
-          </div>
-          <p class="career-desc">
-            Various software engineering roles — startups, software agencies, and freelance work. Mostly Android app development.
-          </p>
-          <span class="career-period">2013 – 2018</span>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- WRITING -->
-  <section class="section" id="blog" aria-label="Blog">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-num" style="color: var(--amber)">03</span>
-        <h2>Blog</h2>
-      </div>
-      <div class="blog-index-list">
-        <a href="/blog/2025" class="blog-index-row reveal">
-          <div class="blog-index-left">
-            <span class="blog-index-title">2025</span>
-            <p class="blog-index-excerpt">This was one crazy year. I was overloaded — house construction, launching a hackerspace, new hobbies, and a full-time job all at once.</p>
-          </div>
-          <span class="blog-index-date">Jan 16, 2026</span>
-        </a>
-        <a href="/blog/2024" class="blog-index-row reveal">
-          <div class="blog-index-left">
-            <span class="blog-index-title">2024</span>
-            <p class="blog-index-excerpt">This year I focused on losing weight, learning Arabic, and making vlogs. I hit many milestones and bettered the quality of my life by a ton.</p>
-          </div>
-          <span class="blog-index-date">Dec 31, 2024</span>
-        </a>
-        <a href="/blog/portfolio" class="blog-index-row reveal">
-          <div class="blog-index-left">
-            <span class="blog-index-title">Building a Portfolio</span>
-            <p class="blog-index-excerpt">Building a portfolio is one of many aspects in proving your skills and improving your chances at landing a good job.</p>
-          </div>
-          <span class="blog-index-date">Jan 25, 2024</span>
-        </a>
-        <a href="/blog/2023" class="blog-index-row reveal">
-          <div class="blog-index-left">
-            <span class="blog-index-title">2023</span>
-            <p class="blog-index-excerpt">Life is a mixture of sad and happy, and this year was no different. I rented an office, got back into reading, and started setting rules to live by.</p>
-          </div>
-          <span class="blog-index-date">Dec 12, 2023</span>
-        </a>
-        <a href="/blog/rules-to-live-by" class="blog-index-row reveal">
-          <div class="blog-index-left">
-            <span class="blog-index-title">Rules To Live By</span>
-            <p class="blog-index-excerpt">A rule is a decision your current self makes, on behalf of all your future selves — a firm manifestation of self-discipline that becomes part of your identity.</p>
-          </div>
-          <span class="blog-index-date">Oct 13, 2023</span>
-        </a>
-        <a href="/blog/thinking-fast-and-slow-one-important-lesson" class="blog-index-row reveal">
-          <div class="blog-index-left">
-            <span class="blog-index-title">Thinking, Fast and Slow: One Important Lesson</span>
-            <p class="blog-index-excerpt">One highlight was so important that if it were the only lesson I learned from this book, it would still be worth reading.</p>
-          </div>
-          <span class="blog-index-date">Oct 5, 2023</span>
-        </a>
-        <a href="/blog/losing-30" class="blog-index-row reveal">
-          <div class="blog-index-left">
-            <span class="blog-index-title">Losing Thirty Before Thirty: A Challenge</span>
-            <p class="blog-index-excerpt">Thirty is a final goodbye to childhood. I've been obese since my teenage years, and now it's time to fight it for good.</p>
-          </div>
-          <span class="blog-index-date">Sep 24, 2023</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 Safa Orhan</p>
-    </div>
-  </footer>
-
-  <div class="hero-character" aria-hidden="true">
-    <img src="/assets/safa-cartoon.png" alt="" width="220" />
   </div>
+</header>
+<div class="ui mono" data-dim>
+  <button data-s="0">spring</button>
+  <button data-s="1">summer</button>
+  <button data-s="2">autumn</button>
+  <button data-s="3">winter</button>
+  <div class="bar"><i id="bar"></i></div>
+</div>
+<script>
+'use strict';
+// How long each season lasts, in seconds. The year runs continuously: every change is spread across it.
+const SEASON_SECONDS = 22.5;
 
-  <script src="script.js?v=3"></script>
+// ---------- helpers ----------
+const TAU = Math.PI * 2;
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = t => t * t * (3 - 2 * t);
+const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+const mix4 = (a, b, t) => [mix(a[0], b[0], t), mix(a[1], b[1], t), mix(a[2], b[2], t), mix(a[3], b[3], t)];
+const pack = c => (clamp(c[0] | 0, 0, 255) << 16) | (clamp(c[1] | 0, 0, 255) << 8) | clamp(c[2] | 0, 0, 255);
+const ch = s => s.charCodeAt(0);
+function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a);
+  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function hash(i, j, s) { let h = (i * 374761393 + j * 668265263 + s * 1442695041) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16; return (h >>> 0) / 4294967296; }
+function vnoise(x, y, s) {
+  const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+  const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+  const a = hash(xi, yi, s), b = hash(xi + 1, yi, s), c = hash(xi, yi + 1, s), d = hash(xi + 1, yi + 1, s);
+  return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+}
+
+// ---------- palettes ----------
+// Each season has two 4-band ramps (shadow → highlight); every clump sits somewhere between them.
+const PAL = [
+  [[[132, 40, 86], [204, 84, 138], [242, 150, 186], [255, 214, 230]],
+   [[150, 72, 112], [226, 142, 178], [250, 200, 220], [255, 242, 247]]],
+  [[[18, 62, 44], [34, 104, 60], [76, 150, 74], [146, 198, 102]],
+   [[34, 80, 40], [66, 128, 52], [120, 174, 70], [196, 222, 120]]],
+  [[[104, 18, 30], [176, 38, 38], [228, 84, 48], [250, 148, 80]],
+   [[130, 62, 20], [200, 108, 30], [240, 164, 52], [255, 214, 110]]],
+  [[[86, 98, 132], [148, 162, 194], [208, 216, 236], [246, 249, 255]],
+   [[86, 98, 132], [148, 162, 194], [208, 216, 236], [246, 249, 255]]],
+];
+const YELLOW = [[96, 84, 18], [170, 146, 36], [222, 196, 64], [250, 232, 130]];
+const BARK = [[44, 28, 34], [84, 54, 58], [128, 92, 86]];
+const SNOW = [238, 242, 252];
+const BAND_GLYPHS = [[':', '+'], ['*', '%'], ['&', '%'], ['@', '&']].map(p => p.map(ch));
+const FRINGE = ['.', '\'', '`'].map(ch);
+const SEASONS = ['spring', 'summer', 'autumn', 'winter'];
+
+// ---------- state ----------
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let W, H, dpr, CW, CH, cols, rows, N, G, C, A, T, Dim;
+let trees = [], parts = [], time = 0;
+let phase = 0;                                           // every visit starts at the beginning of spring
+let season = phase;
+const wind = { gust: 0, gustStart: -99, gustDur: 3, gustDir: 1, gustStrength: 0, next: 4 };
+const pointer = { x: -1e4, y: -1e4, vx: 0, active: false, lastT: 0 };
+
+function resize() {
+  dpr = Math.min(2, window.devicePixelRatio || 1);
+  W = window.innerWidth; H = window.innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  CH = Math.round((clamp(Math.round(W / 125), 8, 12) + 2) * 1.1); CW = CH;   // daoho.dev cell height, made square and 10% larger
+  cols = Math.ceil(W / CW); rows = Math.ceil(H / CH); N = cols * rows;
+  G = new Uint16Array(N); C = new Uint32Array(N); A = new Float32Array(N); T = new Float32Array(N); Dim = new Float32Array(N).fill(1);
+  plant(); measureText();
+}
+
+// Same as daoho.dev: merge text boxes that sit within 160px of each other, then dim the cells
+// under them to 15% and fade back to full over a 4-cell margin.
+function measureText() {
+  const rects = [...document.querySelectorAll('[data-dim]')].map(el => el.getBoundingClientRect())
+    .filter(r => r.width > 0).map(r => ({ left: r.left, top: r.top, right: r.right, bottom: r.bottom }))
+    .sort((a, b) => a.top - b.top);
+  const boxes = [];
+  for (const r of rects) {
+    const b = boxes.find(b => r.top - b.bottom < 160 && r.left - b.right < 160 && b.left - r.right < 160);
+    if (!b) { boxes.push({ ...r }); continue; }
+    b.left = Math.min(b.left, r.left); b.right = Math.max(b.right, r.right); b.bottom = Math.max(b.bottom, r.bottom);
+  }
+  Dim.fill(1);
+  const m = 4 * CW;
+  for (const o of boxes) {
+    const c0 = Math.max(0, Math.floor((o.left - m) / CW)), c1 = Math.min(cols - 1, Math.floor((o.right + m) / CW));
+    const r0 = Math.max(0, Math.floor((o.top - m) / CH)), r1 = Math.min(rows - 1, Math.floor((o.bottom + m) / CH));
+    for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+      const x = c * CW + CW / 2, y = r * CH + CH / 2;
+      const d = Math.hypot(Math.max(o.left - x, 0, x - o.right), Math.max(o.top - y, 0, y - o.bottom));
+      const i = r * cols + c; Dim[i] = Math.min(Dim[i], .15 + .85 * smooth(clamp(d / m, 0, 1)));
+    }
+  }
+}
+
+// ---------- tree growth (3D) ----------
+// The tree is grown in 3D around its trunk, then viewed from a fixed angle and flattened onto the grid.
+const noise3 = (x, y, z) => (vnoise(x + z * .7, y, 3) + vnoise(z - x * .3, y + 5.3, 4)) / 2;
+const norm3 = v => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; };
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+
+function makeTree(seed, x, baseY, h) {
+  const rng = mulberry32(seed);
+  const t = { x, baseY, h, segs: [], blobs: [], sway: 0, tremble: 0, shake: 0, cx: x, cy: baseY - h * .6 };
+  const add = (a, b, k = 1) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k];
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+  const seg = (p1, p2, w1, w2, f1) => { const f2 = f1 + dist(p1, p2) / h; t.segs.push({ p1, p2, w1, w2, f1, f2 }); return f2; };
+  const at = (az, r, y) => [Math.cos(az) * r, y, Math.sin(az) * r];
+
+  // the crown is a dome of separate lumps: a wide lower ring, a smaller middle ring and a cap, with air between them.
+  // one side reaches further than the other so the silhouette changes as the tree turns
+  const azL = rng() * TAU, reach = az => 1 + .22 * Math.cos(az - azL);
+  const lobes = [], ring = (n, r, y, size) => {
+    const a0 = rng() * TAU;
+    for (let i = 0; i < n; i++) {
+      const az = a0 + (i + (rng() - .5) * .5) * TAU / n, k = reach(az);
+      lobes.push({ c: at(az, r * k * (.9 + rng() * .2), y + (rng() - .5) * h * .14), r: size * (.85 + rng() * .3) * Math.sqrt(k),
+        az, hue: rng(), delay: rng() * .7 });
+    }
+  };
+  ring(5, h * .64, -h * .64, h * .22);
+  ring(3, h * .34, -h * .9, h * .22);
+  ring(1, h * .05, -h * 1.08, h * .18);
+
+  // trunk up to the fork, then three main limbs that rise and spread
+  const fork = [h * .02, -h * .3, 0];
+  let f = seg([0, 0, 0], fork, h * .14, h * .1, 0);
+  const limbs = [0, 1, 2].map(i => {
+    const az = azL + (i - 1) * TAU / 3 + (rng() - .5) * .5;
+    const end = at(az, h * .3 * reach(az), -h * .58);
+    return { az, end, f: seg(fork, end, h * .08, h * .055, f) };
+  });
+  const angle = (a, b) => Math.abs(((a - b) % TAU + TAU * 1.5) % TAU - TAU / 2);
+
+  lobes.forEach((L, li) => {
+    // a bough from the nearest main limb into the lump, then twigs fanning out inside it
+    const m = limbs.reduce((a, b) => angle(b.az, L.az) < angle(a.az, L.az) ? b : a);
+    const base = L.c[1] < -h * .8 ? add(m.end, [0, -h * .12, 0]) : m.end;
+    const bf = base === m.end ? m.f : seg(m.end, base, h * .05, h * .042, m.f);
+    const core = add(L.c, [0, L.r * .25, 0]);
+    const cf = seg(base, core, h * .042, h * .026, bf);
+    const n = 10 + (rng() * 4 | 0), hue = L.hue;
+    for (let j = 0; j < n; j++) {
+      // points on the upper part of the lump; the underside stays flatter
+      const a = rng() * TAU, el = -.2 + rng() * 1.2;
+      const d = norm3([Math.cos(a) * Math.cos(el), -Math.sin(el), Math.sin(a) * Math.cos(el)]);
+      const tip = add(L.c, d, L.r * (.4 + rng() * .35));
+      const tf = seg(core, tip, h * .02, h * .01, cf);
+      const r = L.r * (.44 + rng() * .18);
+      t.blobs.push({ p: tip, r, f: tf, lobe: li, leaves: 1, hue: clamp(hue + (rng() - .5) * .3, 0, 1), delay: L.delay + rng() * .3,
+        fullScale: 1 + rng() * .15, phase: rng() * TAU, seed: rng() * 997 | 0 });
+    }
+  });
+  t.lobes = lobes;
+  t.view = azL + .4;                                       // face the fuller side toward the page
+  t.R = Math.max(...t.blobs.map(b => Math.hypot(b.p[0], b.p[2]))) || 1;
+  return t;
+}
+
+// turn to the viewing angle and flatten; keeps the 2D fields (x1, y1, x, y...) the renderer reads
+function project(t) {
+  const c = Math.cos(t.view), s = Math.sin(t.view);
+  t.rc = c; t.rs = s;
+  const P = p => [t.x + p[0] * c + p[2] * s, t.baseY + p[1], -p[0] * s + p[2] * c];
+  for (const g of t.segs) { [g.x1, g.y1] = P(g.p1); [g.x2, g.y2] = P(g.p2); }
+  let sx = 0, sy = 0;
+  for (const b of t.blobs) {
+    [b.x, b.y, b.z] = P(b.p);
+    const k = 1 + b.z / (t.h * 3);                       // slightly larger in front, smaller behind
+    b.rx = b.r * 1.35 * k; b.ry = b.r * .9 * k; sx += b.x; sy += b.y;
+  }
+  // each lobe's on-screen extent, so a whole lump is lit as one rounded mass
+  for (const L of t.lobes) { L.x = 0; L.y = 0; L.n = 0; L.rx = 0; L.ry = 0; }
+  for (const b of t.blobs) { const L = t.lobes[b.lobe]; L.x += b.x; L.y += b.y; L.n++; }
+  for (const L of t.lobes) if (L.n) { L.x /= L.n; L.y /= L.n; }
+  for (const b of t.blobs) { const L = t.lobes[b.lobe];
+    L.rx = Math.max(L.rx, Math.abs(b.x - L.x) + b.rx * .8); L.ry = Math.max(L.ry, Math.abs(b.y - L.y) + b.ry * .8); }
+  t.order = [...t.blobs].sort((a, b) => a.z - b.z);       // back to front
+  t.cx = sx / t.blobs.length; t.cy = sy / t.blobs.length;
+}
+
+function plant() {
+  const seed = 20261026;
+  trees = []; parts = []; birds = [];
+  if (W < 700) {                       // phones: smaller tree, raised so the crown sits above the text
+    const h = Math.min(H * .32, W * .66);
+    trees.push(makeTree(seed, W * .36, H * .68, h));
+  } else {                              // bigger, with the trunk's left side on the screen's left edge
+    const h = Math.min(H * .62, W * .42);
+    trees.push(makeTree(seed, h * .07 + CW * .35, H * 1.04, h));
+  }
+}
+
+// ---------- season state ----------
+function rampOf(k, hue) { return mix4(PAL[k][0], PAL[k][1], hue); }
+const wrap4 = v => ((v % 4) + 4) % 4;
+const ease = (u, a, b) => smooth(clamp((u - a) / (b - a), 0, 1));
+// The year as one timeline (0 = start of spring, 4 = end of winter). Each clump runs slightly behind or
+// ahead of the others, so the crown changes patch by patch.
+function blobState(b) {
+  const u = wrap4(season - b.delay * .18), hue = b.hue;
+  const pink = rampOf(0, hue), green = rampOf(1, hue), fall = rampOf(2, hue);
+  const yl = hue > .7 ? .7 : hue > .45 ? .3 : 0;          // only some clumps yellow in late summer
+  // each clump flips colour on its own schedule rather than every clump blending at once (which turns muddy)
+  const order = (b.seed % 101) / 101, gt = .45 + order;   // half the clumps are green by the end of spring
+  const green_ = ease(u, gt - .08, gt + .08);
+  let ramp, full;
+  if (u < 1) {            // spring: blossoms open on bare twigs, then leaf out: fuller and already half green
+    ramp = mix4(pink, green, green_);
+    full = ease(u, 0, .35) * (1 + .15 * ease(u, .4, 1));
+  } else if (u < 2) {     // summer: green all over, a few clumps start to yellow late on
+    ramp = mix4(mix4(pink, green, green_), YELLOW, yl * ease(u, 1.5, 2));
+    full = 1.15;
+  } else if (u < 3) {     // autumn: the whole crown turns first; the clump thins only as its leaves actually fall
+    const ua = autumnU(b);
+    ramp = mix4(mix4(green, YELLOW, yl), fall, ease(ua, 1.97 + order * .12, 2.03 + order * .12));
+    full = 1.15 * b.leaves;
+  } else {                // winter: bare; snow builds up only where flakes have landed, then melts
+    ramp = rampOf(3, hue);
+    full = .14 * clamp((snowAcc - b.delay * .35) / .65, 0, 1);
+  }
+  return { ramp, full: full * b.fullScale };
+}
+// Timings are set by how long particles take to travel (a season is 22.5s):
+// - a leaf drifts for ~11s (half a season) before it fades, so the crown turns by 2.2, is bare by 2.48,
+//   and the last leaves have blown away by the time winter starts
+// - a flake needs 3-6s to fall from the sky to the crown and ~10s to cross the screen, so snow on the tree is
+//   counted from flakes that actually land there, never from the clock, and melting waits until the last
+//   flakes are down
+const LEAVES = 5;                                        // falling leaves each clump holds in autumn
+const autumnU = b => wrap4(season - b.delay * .06);
+const dropTarget = b => 1 - ease(autumnU(b), 2.2, 2.42);  // share of a clump's leaves still on in autumn
+let snowAcc = 0;                                         // settled snow, 0..1, built from landed flakes
+const snowfall = u => u < 3 || u > 3.3 ? 0 : Math.sin(Math.PI * (u - 3) / .3) ** 1.3;   // last flakes down by ~3.75
+const snowMelt = u => u < 3 ? 1 : .25 * ease(u, 3.68, 3.72);   // per second; bare again by ~3.9
+// how many petals and stray leaves come down (autumn's main fall is driven by the clumps' leaf counts)
+function shedding(u) {
+  if (u < 1) return ease(u, .15, .3) * (.2 + 1.1 * ease(u, .45, .7)) * (1 - ease(u, .85, 1));
+  if (u < 2) return .1;
+  if (u < 2.2) return .4;
+  return 0;
+}
+
+// ---------- raster ----------
+function put(c, r, g, col, ga, ta) {
+  if (c < 0 || r < 0 || c >= cols || r >= rows) return;
+  const i = r * cols + c; G[i] = g; C[i] = col; A[i] = ga; T[i] = ta;
+}
+const offset = (t, f) => t.sway * Math.pow(f, 1.6) + t.tremble * f;
+
+function drawBranches(t, snow) {
+  const barkP = BARK.map(pack), snowP = pack(SNOW);
+  for (const s of t.segs) {
+    const x1 = s.x1 + offset(t, s.f1), x2 = s.x2 + offset(t, s.f2), y1 = s.y1, y2 = s.y2;
+    const dx = x2 - x1, dy = y2 - y1, len2 = dx * dx + dy * dy || 1, len = Math.sqrt(len2);
+    const ux = dx / len, uy = dy / len;
+    const a = Math.atan2(-dy, dx) * 180 / Math.PI, aa = ((a % 180) + 180) % 180;
+    const orient = aa > 68 && aa < 112 ? ch('|') : aa >= 22 && aa <= 68 ? ch('/') : aa >= 112 && aa <= 158 ? ch('\\') : ch('=');
+    const pad = Math.max(s.w1, s.w2) / 2 + CW;
+    const c0 = Math.floor((Math.min(x1, x2) - pad) / CW), c1 = Math.floor((Math.max(x1, x2) + pad) / CW);
+    const r0 = Math.floor((Math.min(y1, y2) - pad) / CH), r1 = Math.floor((Math.max(y1, y2) + pad) / CH);
+    for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+      const px = (c + .5) * CW, py = (r + .5) * CH;
+      const k = clamp(((px - x1) * dx + (py - y1) * dy) / len2, 0, 1);
+      const qx = px - (x1 + dx * k), qy = py - (y1 + dy * k), d = Math.hypot(qx, qy);
+      const hw = lerp(s.w1, s.w2, k) / 2 + CW * .35;
+      if (d > hw) continue;
+      const across = (qx * -uy + qy * ux) / hw;     // -1..1 across the branch
+      const top = -qy / hw;
+      if (snow > .05 && top > .35 && hash(c, r, 5) < snow * .9) { put(c, r, ch(top > .7 ? '_' : '~'), snowP, 1, .3); continue; }
+      const lit = clamp(.5 - across * .5 * Math.sign(ux || 1) + (hash(c, r, 9) - .5) * .3, 0, 1);
+      const band = lit > .72 ? 2 : lit > .3 ? 1 : 0;
+      const g = hw > CW * 1.6 && Math.abs(across) < .6 ? ch(hash(c, r, 4) < .12 ? 'o' : hash(c, r, 6) < .5 ? ':' : '!') : orient;
+      put(c, r, g, barkP[band], 1, .32);
+    }
+  }
+}
+
+function drawBlobs(t) {
+  for (const b of t.order) {
+    const st = b.st; if (st.full < .03) continue;
+    const dz = clamp(b.z / t.R, -1, 1);                // clusters at the back are darker
+    const ramp = st.ramp.map(pack);
+    const flutter = reduced ? 0 : Math.sin(time * 2.2 + b.phase) * CW * .5 * b.f * (.4 + wind.level)
+      + (t.shake || 0) ** 2 * Math.sin(time * 53 + b.phase * 7) * CW * .1;
+    const cx = b.x + offset(t, b.f) + flutter, cy = b.y, L = t.lobes[b.lobe], lcx = L.x + cx - b.x, lcy = L.y;
+    const th = 1 - st.full;
+    const c0 = Math.floor((cx - b.rx * 1.3) / CW), c1 = Math.floor((cx + b.rx * 1.3) / CW);
+    const r0 = Math.floor((cy - b.ry * 1.3) / CH), r1 = Math.floor((cy + b.ry * 1.3) / CH);
+    for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+      const px = (c + .5) * CW, py = (r + .5) * CH, ex = (px - cx) / b.rx, ey = (py - cy) / b.ry;
+      // the point on the cluster's surface this cell shows, turned back into the tree's own frame
+      const ez = Math.sqrt(Math.max(0, 1 - ex * ex - ey * ey));
+      const mx = ex * t.rc - ez * t.rs, mz = ex * t.rs + ez * t.rc;
+      const n = noise3(mx * 2.2 + b.seed, ey * 2.2, mz * 2.2);
+      const pick = hash(Math.floor(mx * 5 + 9), Math.floor(ey * 5 + 9), Math.floor(mz * 5 + 9) + b.seed * 31);
+      const q = 1 - (ex * ex + ey * ey) + (n - .5) * .55;
+      if (q <= th * .95) continue;
+      const lx = (px - lcx) / L.rx, ly = (py - lcy) / L.ry;   // position within the whole lump
+      const lit = -(ex * .55 + ey * .85) * .4 - (lx * .55 + ly * .85) * .75;
+      const s = .42 + lit * .45 + (n - .5) * .3 + dz * .18;
+      let band = s < .25 ? 0 : s < .5 ? 1 : s < .8 ? 2 : 3;
+      if ((ey > .3 && q < th + .4) || ly > .55 + (n - .5) * .3) band = 0;   // dark undersides separate the lumps
+      if (q - th * .95 < .12) {
+        if (c >= 0 && r >= 0 && c < cols && r < rows && T[r * cols + c] >= .15) continue; put(c, r, FRINGE[pick * 3 | 0], ramp[Math.max(1, band)], .85, .08); continue; }
+      put(c, r, BAND_GLYPHS[band][pick < .5 ? 0 : 1], ramp[band], 1, .2 + band * .06);
+    }
+  }
+}
+
+// ---------- particles ----------
+function spawn(t, n) {
+  const visible = t.blobs.filter(b => b.st.full > .2 && b.x + offset(t, b.f) > CW * 3); if (!visible.length) return;
+  const autumn = season >= 2 && season < 3;
+  for (let i = 0; i < n; i++) {
+    const b = visible[Math.random() * visible.length | 0];
+    if (autumn) b.leaves = Math.max(0, b.leaves - 1 / LEAVES);   // shaken-off leaves leave the crown
+    emit(t, b);
+  }
+}
+function emit(t, b) {
+  if (parts.length >= 1500) return;
+  const spring = season < 1, st = b.st;
+  {
+    const kind = spring ? 'petal' : 'leaf';
+    const col = (spring ? rampOf(0, b.hue) : st.ramp)[1 + (Math.random() * 3 | 0)];
+    // start inside the clump and drift down (or down and downwind) until clear of the crown,
+    // so the particle is visible from the start however dense the foliage is
+    let sx = b.x + offset(t, b.f) + (Math.random() * 2 - 1) * b.rx * .9, sy = b.y + (Math.random() - .3) * b.ry, ok = false;
+    const sdx = Math.random() < .5 ? CW : 0;
+    for (let tries = 0; tries < 40 && !ok; tries++) {
+      const c = Math.floor(sx / CW), r = Math.floor(sy / CH);
+      if (c < 0 || r < 0 || c >= cols || r >= rows) break;
+      ok = T[r * cols + c] < .15;
+      if (!ok) { sx += sdx; sy += CH; }
+    }
+    if (!ok) return;
+    parts.push({ kind, x: sx, x0: sx, y: sy,
+      vx: 0, vy: 0, landY: H + CH * 2, rest: 0, a: 1, ph: Math.random() * 8,
+      col: pack(col), alive: true });
+  }
+}
+
+function step(dt) {
+  time += dt;
+  phase += dt / SEASON_SECONDS;
+  season = wrap4(phase);
+  fadeT = Math.max(0, fadeT - dt / .8);
+
+  // wind always blows to the right, into the page; now and then it gets 10% stronger for a few seconds
+  if (time > wind.next) { wind.gustStart = time; wind.gustDur = 3 + Math.random() * 3; wind.next = time + 8 + Math.random() * 10; }
+  const gp = (time - wind.gustStart) / wind.gustDur;
+  wind.gust = gp > 0 && gp < 1 ? Math.sin(Math.PI * gp) ** 2 : 0;
+  const intensity = 1 + .1 * wind.gust;
+  wind.level = .5 * intensity;
+  pointer.vx *= Math.exp(-6 * dt);
+
+  for (const t of trees) {
+    project(t);
+    for (const b of t.blobs) b.st = blobState(b);
+    t.shake = Math.max(0, (t.shake || 0) - dt * 1.8);
+    t.tremble = reduced ? 0 : t.shake * t.shake * (Math.sin(time * 41) + .5 * Math.sin(time * 67 + 1.3)) * CW * .12;
+    t.sway = (.012 * intensity + .004 * Math.sin(time * .9)) * t.h * (reduced ? .3 : 1);
+    t.shed = Math.max(0, (t.shed || 0) - dt);
+    const rate = shedding(season) * (1 + wind.gust * .5) * (1 + t.shed * 12) * (t.h / (H * .6)) * (reduced ? .3 : 1);
+    let n = rate * dt; while (n > 0) { if (Math.random() < Math.min(1, n)) spawn(t, 1); n -= 1; }
+    // autumn: each clump lets go of leaves to follow its drop schedule, so every leaf that disappears from the
+    // crown is one you see falling. After a big jump in time (page load, season picked) it just catches up
+    let budget = 10;
+    for (const b of t.blobs) {
+      if (season < 2) { b.leaves = 1; continue; }
+      if (season >= 3) { b.leaves = 0; continue; }
+      const target = dropTarget(b);
+      if (b.leaves - target > .35) { b.leaves = target; continue; }
+      while (b.leaves - target >= 1 / LEAVES) { b.leaves -= 1 / LEAVES; if (budget-- > 0) emit(t, b); }
+    }
+  }
+  snowAcc = Math.max(0, snowAcc - snowMelt(season) * dt);
+  // the sky is wider than the screen: flakes start as far left as one screen width and drift in on the wind
+  let sn = snowfall(season) * W / 12 * dt * (reduced ? .3 : 1);
+  for (; sn > 0; sn--) if (Math.random() < Math.min(1, sn))
+    parts.push({ kind: 'snow', sky: true, x: (Math.random() * 2 - 1) * W, y: -CH, vx: 0, vy: 0, landY: H + CH * 2, rest: 0,
+      a: .7, ph: Math.random() * 8, col: pack(SNOW), alive: true });
+
+  const windX = 65 * intensity;
+  for (const p of parts) {
+    if (p.rest > 0) { p.rest -= dt; p.a = clamp(p.rest / 2, 0, 1); if (p.rest <= 0) p.alive = false; continue; }
+    const pd = Math.hypot(p.x - pointer.x, p.y - pointer.y), push = pointer.active && pd < 150 ? 1 - pd / 150 : 0;
+    const tv = p.kind === 'leaf' ? 15 : p.kind === 'petal' ? 10 : 80, flutter = p.kind === 'snow' ? 8 : 24;
+    p.vy += (tv - p.vy) * dt;
+    p.vx += (windX * (p.kind === 'snow' ? .5 : p.kind === 'leaf' ? 1.8 : 1) + Math.sin(time * 2.1 + p.ph) * flutter - p.vx) * dt * 1.3 + pointer.vx * push * dt * 2.5;
+    p.x += p.vx * dt; p.y += p.vy * dt;
+    if (p.sky && Math.random() < .3 && leafy(Math.floor(p.x / CW), Math.floor(p.y / CH))) {   // settles on the tree
+      p.alive = false; snowAcc = Math.min(1, snowAcc + 28 / W); continue;
+    }
+    if (p.y >= p.landY) { if (p.landY > H) p.alive = false; else { p.rest = 6 + Math.random() * 8; p.y = p.landY; } }
+    if (p.x < -W * 1.2 || p.x > W + 60) p.alive = false;
+    // fade out as they drift away from the tree and as they near the bottom, so nothing piles up
+    if (p.x0 !== undefined) {
+      p.a = clamp(1.15 - Math.abs(p.x - p.x0) / (W * .75), 0, 1) * clamp((H - p.y) / (H * .2), 0, 1);
+      if (p.a < .02) p.alive = false;
+    }
+  }
+  parts = parts.filter(p => p.alive);
+  stepBirds(dt);
+}
+
+function drawParticles() {
+  for (const p of parts) {
+    let g;
+    if (p.kind === 'leaf') g = p.rest > 0 ? ',' : '/-\\|'[Math.floor(time * 5 + p.ph) & 3];
+    else if (p.kind === 'petal') g = p.rest > 0 ? '.' : '\'`.,'[Math.floor(time * 4 + p.ph) & 3];
+    else g = p.ph > 4 ? '*' : '.';
+    const c = Math.floor(p.x / CW), r = Math.floor(p.y / CH);
+    if (c >= 0 && r >= 0 && c < cols && r < rows && T[r * cols + c] >= .15) continue;   // hidden inside the crown
+    put(c, r, ch(g), p.col, p.a, .14 * p.a);
+  }
+}
+
+// ---------- birds ----------
+// A few birds visit while the tree is in leaf: they fly in on an arc, perch on an exposed top edge of the crown,
+// hop about, and leave again, early if the tree is shaken, the pointer comes close or the leaves under them drop.
+let birds = [], nextBird = 4;
+const BIRD = pack([236, 226, 210]);
+const birdRate = u => u < 1 ? ease(u, .25, .45) : u < 2 ? 1 : u < 3 ? 1 - ease(u, 2.25, 2.6) : 0;
+const bez = (a, c, b, k) => [0, 1].map(i => (1 - k) * (1 - k) * a[i] + 2 * (1 - k) * k * c[i] + k * k * b[i]);
+// a cell of foliage with open air above it (read from the last frame's tiles)
+const leafy = (c, r) => c >= 0 && r >= 0 && c < cols && r < rows && T[r * cols + c] >= .15;
+const ledge = (c, r) => leafy(c, r) && !leafy(c, r - 1) && r > 3 && !birds.some(o => o.c === c && o.r === r);
+function fly(bd, from, to) {
+  const d = Math.hypot(to[0] - from[0], to[1] - from[1]);
+  bd.from = from; bd.to = to; bd.k = 0; bd.rate = (170 + Math.random() * 80) / d;
+  bd.ctrl = [(from[0] + to[0]) / 2, Math.min(from[1], to[1]) - d * (.15 + Math.random() * .2)];
+}
+function offscreen() {
+  const r = Math.random();
+  return r < .5 ? [W + CW * 3, H * (.08 + Math.random() * .4)] : r < .8 ? [W * (.3 + Math.random() * .7), -CH * 3] : [-CW * 3, H * (.05 + Math.random() * .3)];
+}
+const seat = bd => [(bd.c + .5) * CW, (bd.r - .5) * CH];
+function stepBirds(dt) {
+  const t = trees[0]; if (!t || reduced) return;
+  const rate = birdRate(season);
+  if (rate > 0 && (nextBird -= dt * rate) <= 0) {
+    nextBird = 1.25 + Math.random() * 3;
+    if (birds.length < 12) {
+      const spots = [];
+      for (let c = 3; c < Math.min(cols, W * .6 / CW); c++) for (let r = 4; r < rows - 4; r++) if (ledge(c, r)) spots.push([c, r]);
+      if (spots.length) {
+        const [c, r] = spots[Math.random() * spots.length | 0];
+        const bd = { state: 'in', c, r, ph: Math.random() * 9, x: 0, y: 0 };
+        fly(bd, offscreen(), seat(bd)); birds.push(bd);
+      }
+    }
+  }
+  for (const bd of birds) {
+    if (bd.state === 'perch') {
+      bd.stay -= dt;
+      if (Math.random() < dt * .35) {                       // hop to a neighbouring bit of ledge
+        const dc = Math.random() < .5 ? -1 : 1;
+        for (const dr of [0, -1, 1, -2, 2]) if (ledge(bd.c + dc, bd.r + dr)) { bd.c += dc; bd.r += dr; break; }
+      }
+      [bd.x, bd.y] = seat(bd);
+      const near = pointer.active && Math.hypot(pointer.x - bd.x, pointer.y - bd.y) < 90;
+      if (bd.stay <= 0 || near || t.shake > .6 || !leafy(bd.c, bd.r)) { bd.state = 'out'; fly(bd, [bd.x, bd.y], offscreen()); }
+      continue;
+    }
+    bd.k = Math.min(1, bd.k + dt * bd.rate);
+    [bd.x, bd.y] = bez(bd.from, bd.ctrl, bd.to, smooth(bd.k) * .3 + bd.k * .7);
+    if (bd.k >= 1) {
+      if (bd.state === 'in') { bd.state = 'perch'; bd.stay = 5 + Math.random() * 12; }
+      else bd.gone = true;
+    }
+  }
+  birds = birds.filter(bd => !bd.gone);
+}
+function drawBirds() {
+  for (const bd of birds) {
+    let g = '.';
+    if (bd.state !== 'perch') {
+      const glide = Math.sin(time * 1.3 + bd.ph) > .55;      // flap, with the odd glide
+      g = glide ? '-' : Math.sin(time * 16 + bd.ph) > 0 ? 'v' : '^';
+    } else g = Math.sin(time * .7 + bd.ph) > .85 ? '`' : '\u2022';   // perched, now and then turning its head
+    put(Math.floor(bd.x / CW), Math.floor(bd.y / CH), ch(g), BIRD, 1, .22);
+  }
+}
+
+// ---------- render ----------
+const styles = new Map(), chars = [];
+const style = v => { let s = styles.get(v); if (!s) { s = 'rgb(' + (v >>> 16) + ',' + (v >>> 8 & 255) + ',' + (v & 255) + ')'; styles.set(v, s); } return s; };
+const charOf = g => chars[g] || (chars[g] = String.fromCharCode(g));
+
+function frame() {
+  G.fill(0); T.fill(0);
+  for (const t of trees) { drawBranches(t, snowAcc); drawBlobs(t); }
+  drawParticles();
+  drawBirds();
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.globalAlpha = 1;
+  ctx.fillStyle = '#121014'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '600 ' + Math.round(CH * .72) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (let i = 0; i < N; i++) {
+    if (!G[i] && !T[i]) continue;
+    const x = (i % cols) * CW, y = (i / cols | 0) * CH;
+    if (T[i] > 0) { ctx.globalAlpha = T[i] * Dim[i]; ctx.fillStyle = style(C[i]); ctx.fillRect(x + 1, y + 1, CW - 1, CH - 1); }
+    if (G[i]) { ctx.globalAlpha = A[i] * Dim[i] * .78; ctx.fillStyle = style(C[i]); ctx.fillText(charOf(G[i]), x + CW / 2, y + CH / 2 + 1); }
+  }
+  if (fadeT > 0) { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = smooth(fadeT); ctx.drawImage(snap, 0, 0); }
+}
+
+// ---------- season picker ----------
+// Jump straight to a characteristic moment of the picked season and crossfade from the old scene. A couple of
+// seconds are simulated first so leaves, petals and snow are already in the air when it appears.
+const snap = document.createElement('canvas');
+const PICK = [.45, 1.3, 2.15, 3.22];                     // full bloom, deep summer, turned crown, mid snowfall
+let fadeT = 0;
+function pickSeason(k) {
+  snap.width = cv.width; snap.height = cv.height; snap.getContext('2d').drawImage(cv, 0, 0);
+  const warm = 2;
+  phase = Math.floor(phase / 4) * 4 + PICK[k] - warm / SEASON_SECONDS; season = wrap4(phase);
+  parts = []; birds = []; snowAcc = 0;
+  for (const t of trees) for (const b of t.blobs) b.leaves = 1;
+  for (let i = 0; i < warm * 30; i++) { step(1 / 30); frame(); }
+  fadeT = 1;
+}
+
+// ---------- ui ----------
+const btns = [...document.querySelectorAll('[data-s]')], bar = document.getElementById('bar');
+btns.forEach(b => b.addEventListener('click', e => { e.stopPropagation(); pickSeason(+b.dataset.s); }));
+window.addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '4') pickSeason(+e.key - 1); });
+function updateUI() {
+  const cur = Math.floor(season) % 4;
+  btns.forEach(b => b.classList.toggle('on', +b.dataset.s === cur));
+  bar.style.width = ((phase % 1) * 100).toFixed(1) + '%';
+  // tint link hovers with the tree's current colour
+  const c = blobState({ hue: .4, delay: 0, fullScale: 1 }).ramp[2];
+  document.documentElement.style.setProperty('--season', 'rgb(' + c.map(v => v | 0).join(',') + ')');
+}
+window.addEventListener('pointermove', e => {
+  const now = performance.now(), dt = Math.max(8, now - pointer.lastT) / 1000;
+  if (pointer.active) pointer.vx = lerp(pointer.vx, (e.clientX - pointer.x) / dt, .3);
+  pointer.x = e.clientX; pointer.y = e.clientY; pointer.active = true; pointer.lastT = now;
+});
+document.addEventListener('pointerleave', () => pointer.active = false);
+cv.addEventListener('click', e => {
+  // any click startles the birds, and they keep away for a little while
+  for (const bd of birds) if (bd.state !== 'out') { bd.state = 'out'; fly(bd, [bd.x, bd.y], offscreen()); }
+  nextBird = Math.max(nextBird, 4);
+  const c = Math.floor(e.clientX / CW), r = Math.floor(e.clientY / CH), onTree = leafy(c, r);
+  for (const t of trees) {
+    const dist = Math.hypot(e.clientX - t.cx, (e.clientY - t.cy) * 1.2);
+    if (!onTree && dist > t.h * .7) continue;
+    t.shake = 1;                                                 // a short, subtle tremble
+    t.shed = 2.5;                                                // leaves fall much faster for a moment
+    spawn(t, 18);
+    knockSnow(t);
+  }
+});
+// in winter a shake drops part of the settled snow as a shower of flakes
+function knockSnow(t) {
+  const cover = snowAcc;
+  if (cover < .1) return;
+  const n = Math.round(70 * cover);
+  for (let i = 0; i < n; i++) {
+    let x, y;
+    if (Math.random() < .5) { const b = t.blobs[Math.random() * t.blobs.length | 0]; x = b.x + offset(t, b.f) + (Math.random() - .5) * b.rx * 1.6; y = b.y - b.ry * Math.random() * .6; }
+    else { const g = t.segs[Math.random() * t.segs.length | 0], k = Math.random(); x = lerp(g.x1, g.x2, k) + offset(t, lerp(g.f1, g.f2, k)); y = lerp(g.y1, g.y2, k) - CH * .5; }
+    parts.push({ kind: 'snow', x, x0: x, y, vx: 0, vy: 10 + Math.random() * 25, landY: H + CH * 2, rest: 0, a: .9,
+      ph: Math.random() * 8, col: pack(SNOW), alive: true });
+  }
+  snowAcc *= .6;
+}
+let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
+
+// ---------- loop ----------
+resize();
+if (document.fonts) document.fonts.ready.then(measureText);   // text boxes change size once Geist Mono loads
+let last = performance.now(), uiT = 0;
+function loop(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  step(dt); frame();
+  if ((uiT += dt) > .2) { uiT = 0; updateUI(); }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
 </body>
 </html>
