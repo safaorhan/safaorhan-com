@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Safa Orhan — SDK Engineer at Supabase, based in Konya. Software, electronics and a cherry tree that keeps the seasons.">
 <title>Safa Orhan</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='3' fill='%235c281e'/><text x='16' y='17' text-anchor='middle' dominant-baseline='middle' font-family='ui-monospace,SFMono-Regular,Menlo,monospace' font-weight='700' font-size='24' fill='%23f0a434'>S</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap">
@@ -272,7 +273,7 @@ function blobState(b) {
     full = 1.15;
   } else if (u < 3) {     // autumn: the whole crown turns first; the clump thins only as its leaves actually fall
     const ua = autumnU(b);
-    ramp = mix4(mix4(green, YELLOW, yl), fall, ease(ua, 1.97 + order * .12, 2.03 + order * .12));
+    ramp = mix4(mix4(green, YELLOW, yl), fall, ease(ua, 2 + order * .26, 2.08 + order * .26));
     full = 1.15 * b.leaves;
   } else {                // winter: bare; snow builds up only where flakes have landed, then melts
     ramp = rampOf(3, hue);
@@ -281,14 +282,14 @@ function blobState(b) {
   return { ramp, full: full * b.fullScale };
 }
 // Timings are set by how long particles take to travel (a season is 22.5s):
-// - a leaf drifts for ~11s (half a season) before it fades, so the crown turns by 2.2, is bare by 2.48,
-//   and the last leaves have blown away by the time winter starts
+// - a leaf drifts for ~11s (half a season) before it fades; the crown turns by 2.4 and is bare by 2.94,
+//   so the last leaves are still blowing away as the first flakes of winter come down
 // - a flake needs 3-6s to fall from the sky to the crown and ~10s to cross the screen, so snow on the tree is
 //   counted from flakes that actually land there, never from the clock, and melting waits until the last
 //   flakes are down
 const LEAVES = 5;                                        // falling leaves each clump holds in autumn
 const autumnU = b => wrap4(season - b.delay * .06);
-const dropTarget = b => 1 - ease(autumnU(b), 2.2, 2.42);  // share of a clump's leaves still on in autumn
+const dropTarget = b => 1 - ease(autumnU(b), 2.6, 2.88);  // share of a clump's leaves still on in autumn
 let snowAcc = 0;                                         // settled snow, 0..1, built from landed flakes
 const snowfall = u => u < 3 || u > 3.3 ? 0 : Math.sin(Math.PI * (u - 3) / .3) ** 1.3;   // last flakes down by ~3.75
 const snowMelt = u => u < 3 ? 1 : .25 * ease(u, 3.68, 3.72);   // per second; bare again by ~3.9
@@ -296,7 +297,7 @@ const snowMelt = u => u < 3 ? 1 : .25 * ease(u, 3.68, 3.72);   // per second; ba
 function shedding(u) {
   if (u < 1) return ease(u, .15, .3) * (.2 + 1.1 * ease(u, .45, .7)) * (1 - ease(u, .85, 1));
   if (u < 2) return .1;
-  if (u < 2.2) return .4;
+  if (u < 2.6) return .4;
   return 0;
 }
 
@@ -570,7 +571,7 @@ function frame() {
 // Jump straight to a characteristic moment of the picked season and crossfade from the old scene. A couple of
 // seconds are simulated first so leaves, petals and snow are already in the air when it appears.
 const snap = document.createElement('canvas');
-const PICK = [.45, 1.3, 2.15, 3.22];                     // full bloom, deep summer, turned crown, mid snowfall
+const PICK = [.45, 1.3, 2.44, 3.22];                     // full bloom, deep summer, turned crown, mid snowfall
 let fadeT = 0;
 function pickSeason(k) {
   snap.width = cv.width; snap.height = cv.height; snap.getContext('2d').drawImage(cv, 0, 0);
